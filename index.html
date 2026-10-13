@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Prediction | Phishing Detection</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #172554;
+        }
+
+        header {
+            background: linear-gradient(120deg, #172554, #3730a3);
+            color: white;
+            padding: 22px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-icon {
+            font-size: 32px;
+            background: rgba(255,255,255,0.15);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 13px;
+            color: #dbeafe;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            border: 1px solid #c7d2fe;
+            padding: 11px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            background: white;
+            color: #3730a3;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 92%;
+            margin: 35px auto;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            color: #4f46e5;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .intro h2 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .panel,
+        .result-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(15,23,42,0.05);
+        }
+
+        .panel h3,
+        .result-heading {
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .panel-description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .url-input {
+            display: flex;
+            gap: 12px;
+        }
+
+        .url-input input {
+            flex: 1;
+            min-width: 0;
+            padding: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .url-input input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+        }
+
+        .url-input button {
+            background: #3730a3;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 0 22px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .url-input button:hover {
+            background: #4f46e5;
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            border-radius: 9px;
+            padding: 14px;
+            margin-top: 18px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .result-card {
+            margin-top: 25px;
+        }
+
+        .result-heading {
+            margin-bottom: 20px;
+        }
+
+        .result-status {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+        }
+
+        .result-status.safe {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+        }
+
+        .result-status.danger {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        .result-status.unknown {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+        }
+
+        .status-icon {
+            font-size: 36px;
+        }
+
+        .status-text h4 {
+            font-size: 20px;
+            margin-bottom: 7px;
+            overflow-wrap: anywhere;
+        }
+
+        .status-text p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .detail-row {
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .confidence-track {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 20px;
+        }
+
+        .notice {
+            margin-top: 20px;
+            background: #eef2ff;
+            color: #3730a3;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        .action-link {
+            display: inline-block;
+            text-decoration: none;
+            background: #3730a3;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .action-link.secondary {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        footer {
+            margin-top: 35px;
+            background: #172554;
+            color: white;
+            padding: 22px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 18px;
+            }
+
+            header h1 {
+                font-size: 17px;
+            }
+
+            header p {
+                font-size: 11px;
+            }
+
+            .brand-icon {
+                font-size: 24px;
+            }
+
+            .back-link {
+                font-size: 12px;
+                padding: 9px;
+            }
+
+            .intro h2 {
+                font-size: 25px;
+            }
+
+            .panel,
+            .result-card {
+                padding: 20px;
+            }
+
+            .url-input {
+                flex-direction: column;
+            }
+
+            .url-input button {
+                padding: 14px;
+            }
+
+            .result-status {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <div class="brand-icon">🛡️</div>
+        <div>
+            <h1>Phishing Website Detection</h1>
+            <p>Machine Learning Security System</p>
+        </div>
+    </div>
+
+    <a href="/dashboard" class="back-link">← Dashboard</a>
+</header>
+
+<main class="container">
+
+    <section class="intro">
+        <div class="eyebrow">SMART URL ANALYSIS</div>
+        <h2>Website URL Prediction</h2>
+        <p>
+            Enter a website URL to check the prediction generated
+            by the trained Random Forest machine learning model.
+        </p>
+    </section>
+
+    <section class="panel">
+        <h3>🔍 Analyze Website</h3>
+
+        <p class="panel-description">
+            Enter the complete website address, including
+            https:// or http://, and click the detection button.
+        </p>
+
+        <form action="/detect" method="POST">
+            <label for="url">Website URL</label>
+
+            <div class="url-input">
+                <input
+                    type="url"
+                    id="url"
+                    name="url"
+                    placeholder="https://www.google.com"
+                    value="{{ url or '' }}"
+                    required
+                >
+
+                <button type="submit">Detect Website</button>
+            </div>
+        </form>
+
+        {% if error %}
+        <div class="error">
+            ⚠️ {{ error }}
+        </div>
+        {% endif %}
+    </section>
+
+    {% if result %}
+    <section class="result-card">
+
+        <h3 class="result-heading">📊 Phishing Prediction Result</h3>
+
+        {% if result|string|upper == "LEGITIMATE WEBSITE" %}
+        <div class="result-status safe">
+            <div class="status-icon">✅</div>
+
+            <div class="status-text">
+                <h4>LEGITIMATE WEBSITE</h4>
+                <p>
+                    The machine learning model classified this URL
+                    as legitimate. Verify the website before sharing
+                    sensitive information.
+                </p>
+            </div>
+        </div>
+
+        {% elif result|string|upper == "PHISHING WEBSITE" %}
+        <div class="result-status danger">
+            <div class="status-icon">🚨</div>
+
+            <div class="status-text">
+                <h4>PHISHING WEBSITE</h4>
+                <p>
+                    The model classified this URL as potentially
+                    phishing. Avoid entering passwords or banking
+                    information unless you have verified the site.
+                </p>
+            </div>
+        </div>
+
+        {% else %}
+        <div class="result-status unknown">
+            <div class="status-icon">⚠️</div>
+
+            <div class="status-text">
+                <h4>{{ result }}</h4>
+                <p>
+                    The model returned an unexpected result.
+                    Check the prediction function and label mapping.
+                </p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="detail-row">
+            <span class="detail-label">Analyzed Website</span>
+            <div class="detail-value">{{ url }}</div>
+        </div>
+
+        {% if confidence is not none and confidence != "" %}
+        <div class="detail-row">
+            <span class="detail-label">Model Confidence Score</span>
+
+            <div class="detail-value">
+                {{ "%.1f"|format(confidence|float) }}%
+            </div>
+
+            <div class="confidence-track">
+                <div
+                    class="confidence-fill"
+                    style="width: 0%;"
+                ></div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="notice">
+            <strong>Important:</strong>
+            This result is a machine learning prediction, not a
+            guarantee that a website is safe or malicious. Always
+            verify a website before entering personal information.
+        </div>
+
+        <div class="actions">
+            <a href="/dashboard" class="action-link secondary">
+                Back to Dashboard
+            </a>
+
+            <a href="/detect" class="action-link">
+                Check Another URL
+            </a>
+        </div>
+
+    </section>
+    {% endif %}
+
+</main>
+
+<footer>
+    Phishing Website Detection Using Machine Learning
+    <br>
+    Python | Flask | Random Forest Classifier
+</footer>
+
+</body>
+</html>

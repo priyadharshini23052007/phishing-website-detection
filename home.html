@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phishing Detection - Home</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef4ff, #f8fbff);
+            color: #172554;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 3px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+        .logo-icon {
+            font-size: 27px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .dashboard-btn {
+            color: #4f46e5;
+            border: 1px solid #4f46e5;
+            background: white;
+        }
+
+        .logout-btn {
+            color: white;
+            background: #4f46e5;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 55px auto;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 22px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 12px 35px rgba(30, 41, 59, 0.10);
+        }
+
+        .security-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            background: #eef2ff;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            color: #172554;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #4f46e5;
+        }
+
+        .hero-description {
+            max-width: 700px;
+            margin: 0 auto 35px;
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* DETECTION BOX */
+
+        .detection-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 30px;
+            text-align: left;
+        }
+
+        .detection-box h2 {
+            color: #172554;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .detection-box p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .url-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .url-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.10);
+        }
+
+        .detect-btn {
+            border: none;
+            background: #4f46e5;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 9px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .detect-btn:hover {
+            background: #4338ca;
+        }
+
+        /* FEATURES */
+
+        .features-title {
+            text-align: center;
+            margin: 55px 0 25px;
+        }
+
+        .features-title h2 {
+            font-size: 28px;
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+        .features-title p {
+            color: #64748b;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 17px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(30, 41, 59, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #172554;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 60px;
+            background: white;
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .url-form {
+                flex-direction: column;
+            }
+
+            .hero {
+                padding: 35px 20px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <span class="logo-icon">🛡️</span>
+            Phishing Website Detection
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard" class="nav-btn dashboard-btn">
+                Dashboard
+            </a>
+
+            <a href="/logout" class="nav-btn logout-btn">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="container">
+
+        <section class="hero">
+
+            <div class="security-icon">
+                🛡️
+            </div>
+
+            <h1>
+                Secure Website <span>Detection</span>
+            </h1>
+
+            <p class="hero-description">
+                Analyze a website URL using our machine learning based
+                phishing detection system and identify potentially
+                suspicious websites.
+            </p>
+
+
+            <!-- URL DETECTION -->
+
+            <div class="detection-box">
+
+                <h2>
+                    🔍 Check a Website
+                </h2>
+
+                <p>
+                    Enter the complete website URL below for analysis.
+                </p>
+
+                <form method="POST" action="/detect" class="url-form">
+
+                    <input
+                        type="url"
+                        name="url"
+                        class="url-input"
+                        placeholder="https://example.com"
+                        required
+                    >
+
+                    <button type="submit" class="detect-btn">
+                        Detect Website
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <div class="features-title">
+
+            <h2>
+                Website Security Analysis
+            </h2>
+
+            <p>
+                Our system evaluates important URL characteristics
+            </p>
+
+        </div>
+
+
+        <section class="features">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔗
+                </div>
+
+                <h3>
+                    URL Analysis
+                </h3>
+
+                <p>
+                    Analyze URL structure, length, symbols,
+                    dots and other characteristics.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🤖
+                </div>
+
+                <h3>
+                    ML Prediction
+                </h3>
+
+                <p>
+                    Use the trained Random Forest machine learning
+                    model to classify the website URL.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Confidence Score
+                </h3>
+
+                <p>
+                    View the prediction together with the confidence
+                    score generated by the model.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        AI-Based Phishing Website Detection System
+    </footer>
+
+</body>
+</html>

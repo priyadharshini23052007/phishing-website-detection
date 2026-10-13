@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Phishing Website Detection</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef4ff, #f8fbff);
+            color: #172554;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 72px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            box-shadow: 0 3px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 21px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+        .logo-icon {
+            font-size: 27px;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: #4f46e5;
+
+            border: 1px solid #4f46e5;
+
+            padding: 10px 20px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .home-link:hover {
+            background: #eef2ff;
+        }
+
+        /* LOGIN AREA */
+
+        .login-container {
+            flex: 1;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 50px 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+
+            background: white;
+
+            border-radius: 22px;
+
+            padding: 42px 40px;
+
+            box-shadow:
+                0 15px 40px rgba(30, 41, 59, 0.12);
+
+            text-align: center;
+        }
+
+        /* ICON */
+
+        .security-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 22px;
+
+            background: #eef2ff;
+
+            border-radius: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 42px;
+        }
+
+        .login-card h1 {
+            font-size: 30px;
+            color: #172554;
+
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        /* FORM */
+
+        .form-group {
+            text-align: left;
+
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+
+            color: #172554;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #4f46e5;
+
+            box-shadow:
+                0 0 0 3px rgba(79, 70, 229, 0.10);
+        }
+
+        /* LOGIN BUTTON */
+
+        .login-btn {
+            width: 100%;
+
+            border: none;
+
+            background: #4f46e5;
+
+            color: white;
+
+            padding: 14px;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #4338ca;
+        }
+
+        /* REGISTER */
+
+        .register-text {
+            margin-top: 22px;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        .register-text a {
+            color: #4f46e5;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* SECURITY MESSAGE */
+
+        .security-note {
+            margin-top: 25px;
+
+            background: #f1f5ff;
+
+            border-radius: 10px;
+
+            padding: 12px;
+
+            color: #475569;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        /* ERROR / SUCCESS MESSAGE */
+
+        .message {
+            margin-bottom: 18px;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            color: #dc2626;
+
+            background: #fef2f2;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: white;
+
+            text-align: center;
+
+            padding: 20px;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .home-link {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .login-card {
+                padding: 35px 25px;
+            }
+
+            .login-card h1 {
+                font-size: 26px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <span class="logo-icon">🛡️</span>
+
+            Phishing Website Detection
+
+        </div>
+
+
+        <a href="/" class="home-link">
+            Home
+        </a>
+
+    </nav>
+
+
+    <!-- LOGIN -->
+
+    <main class="login-container">
+
+        <div class="login-card">
+
+
+            <!-- SECURITY ICON -->
+
+            <div class="security-icon">
+                🛡️
+            </div>
+
+
+            <h1>
+                Welcome Back
+            </h1>
+
+
+            <p class="subtitle">
+                Sign in to access your phishing detection dashboard.
+            </p>
+
+
+            <!-- LOGIN FORM -->
+
+            <form method="POST" action="/login">
+
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn">
+
+                    Login
+
+                </button>
+
+
+            </form>
+
+
+            <!-- REGISTER LINK -->
+
+            <div class="register-text">
+
+                Don't have an account?
+
+                <a href="/register">
+                    Create an account
+                </a>
+
+            </div>
+
+
+            <!-- SECURITY NOTE -->
+
+            <div class="security-note">
+
+                🔒 Your account is protected by the application's
+                authentication system.
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        AI-Based Phishing Website Detection System
+
+    </footer>
+
+
+</body>
+
+</html>
